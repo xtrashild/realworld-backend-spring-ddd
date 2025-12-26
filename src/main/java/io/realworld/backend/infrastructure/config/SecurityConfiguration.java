@@ -9,17 +9,17 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration {
   private final JwtTokenFilter jwtTokenFilter;
 
   @Autowired
@@ -32,46 +32,46 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     return new BCryptPasswordEncoder();
   }
 
-  @Override
-  protected void configure(HttpSecurity http) throws Exception {
-    // Enable CORS and disable CSRF
-    http =
-        http.cors()
-            .configurationSource(
-                request -> {
-                  var cors = new CorsConfiguration();
-                  cors.setAllowedOrigins(
-                      List.of("http://localhost:8080", "https://editor.swagger.io"));
-                  cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-                  cors.setAllowedHeaders(List.of("*"));
-                  return cors;
-                })
-            .and()
-            .csrf()
-            .disable();
+  /**
+   * Configures the security filter chain.
+   *
+   * @param http the HttpSecurity to configure
+   * @return the configured SecurityFilterChain
+   * @throws Exception if an error occurs during configuration
+   */
+  @Bean
+  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    http.cors(
+            cors ->
+                cors.configurationSource(
+                    request -> {
+                      var config = new CorsConfiguration();
+                      config.setAllowedOrigins(
+                          List.of("http://localhost:4200", "http://localhost:8080"));
+                      config.setAllowedMethods(
+                          List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+                      config.setAllowedHeaders(List.of("*"));
+                      config.setAllowCredentials(true);
+                      return config;
+                    }))
+        .csrf(csrf -> csrf.disable())
+        .sessionManagement(
+            session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .exceptionHandling(
+            ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+        .authorizeHttpRequests(
+            auth ->
+                auth.requestMatchers("/", "/swagger-ui/**", "/v3/api-docs/**")
+                    .permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/users", "/api/users/login")
+                    .permitAll()
+                    .requestMatchers(
+                        HttpMethod.GET, "/api/articles/**", "/api/profiles/**", "/api/tags")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated())
+        .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
-    // Set session management to stateless
-    http = http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and();
-
-    // Set unauthorized requests exception handler
-    http =
-        http.exceptionHandling()
-            .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
-            .and();
-
-    // Set permissions on endpoints
-    http.authorizeRequests()
-        .antMatchers("/", "/swagger-ui.html", "/webjars/**", "/swagger-resources/**", "/api-docs")
-        .permitAll()
-        // Our public endpoints
-        .antMatchers(HttpMethod.POST, "/api/users", "/api/users/login")
-        .permitAll()
-        .antMatchers(HttpMethod.GET, "/api/articles/**", "/api/profiles/**", "/api/tags")
-        .permitAll()
-        // Our private endpoints
-        .anyRequest()
-        .authenticated();
-
-    http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+    return http.build();
   }
 }

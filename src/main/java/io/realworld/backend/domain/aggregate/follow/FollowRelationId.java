@@ -1,9 +1,9 @@
 package io.realworld.backend.domain.aggregate.follow;
 
 import com.google.common.base.MoreObjects;
+import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
-import javax.persistence.Embeddable;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 @Embeddable

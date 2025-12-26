@@ -20,7 +20,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<Article, L
           + "LEFT JOIN ArticleFavourite f ON a.id = f.id.articleId "
           + "LEFT JOIN User fu ON fu.id = f.id.userId "
           + "WHERE "
-          + "(:tag IS NULL OR :tag IN t) AND "
+          + "(:tag IS NULL OR :tag MEMBER OF a.tags) AND "
           + "(:author IS NULL OR p.username = :author) AND "
           + "(:favorited IS NULL OR fu.username = :favorited)")
   List<Article> findByFilters(
@@ -33,7 +33,7 @@ public interface ArticleRepository extends PagingAndSortingRepository<Article, L
           + "LEFT JOIN ArticleFavourite f ON a.id = f.id.articleId "
           + "LEFT JOIN User fu ON fu.id = f.id.userId "
           + "WHERE "
-          + "(:tag IS NULL OR :tag IN t) AND "
+          + "(:tag IS NULL OR :tag MEMBER OF a.tags) AND "
           + "(:author IS NULL OR p.username = :author) AND "
           + "(:favorited IS NULL OR fu.username = :favorited)")
   int countByFilter(@Nullable String tag, @Nullable String author, @Nullable String favorited);
@@ -42,4 +42,9 @@ public interface ArticleRepository extends PagingAndSortingRepository<Article, L
 
   @Query("SELECT t from Article a LEFT JOIN a.tags t")
   List<String> findAllTags();
+
+  // TODO: check if works
+  void save(Article article);
+
+  void delete(Article article);
 }

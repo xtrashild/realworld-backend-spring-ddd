@@ -1,17 +1,19 @@
 package io.realworld.backend.domain.aggregate.user;
 
 import com.google.common.base.MoreObjects;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import java.util.Optional;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
 import org.checkerframework.checker.nullness.qual.Nullable;
 import org.checkerframework.framework.qual.DefaultQualifier;
 import org.checkerframework.framework.qual.TypeUseLocation;
 
 @Entity
+@Table(name = "users")
 @DefaultQualifier(value = Nullable.class, locations = TypeUseLocation.FIELD)
 public class User {
   @Id

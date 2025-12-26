@@ -65,4 +65,10 @@ public class OffsetBasedPageRequest implements Pageable {
   public static OffsetBasedPageRequest of(int offset, int limit, Sort sort) {
     return new OffsetBasedPageRequest(offset, limit, sort);
   }
+
+  @Override
+  public Pageable withPage(int pageNumber) {
+    // TODO Auto-generated method stub
+    return null;
+  }
 }

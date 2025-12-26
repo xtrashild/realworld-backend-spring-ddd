@@ -1,10 +1,11 @@
 package io.realworld.backend.infrastructure.security;
 
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import io.realworld.backend.domain.aggregate.user.User;
 import io.realworld.backend.domain.aggregate.user.UserRepository;
 import io.realworld.backend.domain.service.JwtService;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,9 +39,9 @@ public class JJwtService implements JwtService {
   @Override
   public String generateToken(User user) {
     return Jwts.builder()
-        .setSubject(Long.toString(user.getId()))
-        .setExpiration(new Date(System.currentTimeMillis() + sessionTime * 1000))
-        .signWith(SignatureAlgorithm.HS512, secret)
+        .subject(Long.toString(user.getId()))
+        .expiration(new Date(System.currentTimeMillis() + sessionTime * 1000))
+        .signWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
         .compact();
   }
 
@@ -49,7 +50,12 @@ public class JJwtService implements JwtService {
   public Optional<User> getUser(String token) {
     try {
       final var subject =
-          Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
+          Jwts.parser()
+              .verifyWith(Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8)))
+              .build()
+              .parseSignedClaims(token)
+              .getPayload()
+              .getSubject();
       final var userId = Long.parseLong(subject);
       return userRepository.findById(userId);
     } catch (Exception e) {

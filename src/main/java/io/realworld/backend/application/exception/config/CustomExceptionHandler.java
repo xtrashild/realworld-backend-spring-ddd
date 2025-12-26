@@ -5,10 +5,11 @@ import io.realworld.backend.application.exception.UserNotFoundException;
 import io.realworld.backend.rest.api.GenericErrorModelData;
 import io.realworld.backend.rest.api.GenericErrorModelErrorsData;
 import java.util.List;
+import org.jspecify.annotations.Nullable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -23,7 +24,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
       Exception ex,
       @Nullable Object body,
       HttpHeaders headers,
-      HttpStatus status,
+      HttpStatusCode status,
       WebRequest request) {
     GenericErrorModelData model = new GenericErrorModelData();
     GenericErrorModelErrorsData errors = new GenericErrorModelErrorsData();
@@ -31,7 +32,10 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     model.setErrors(errors);
     // HACK status
     return new ResponseEntity<>(
-        model, status == HttpStatus.BAD_REQUEST ? HttpStatus.UNPROCESSABLE_ENTITY : status);
+        model,
+        status.value() == HttpStatus.BAD_REQUEST.value()
+            ? HttpStatus.UNPROCESSABLE_CONTENT
+            : status);
   }
 
   @ExceptionHandler(Exception.class)
@@ -44,7 +48,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
   public ResponseEntity<Object> handleInvalidRequestException(
       InvalidRequestException ex, WebRequest request) {
     return handleExceptionInternal(
-        ex, null, new HttpHeaders(), HttpStatus.UNPROCESSABLE_ENTITY, request);
+        ex, null, new HttpHeaders(), HttpStatus.UNPROCESSABLE_CONTENT, request);
   }
 
   @ExceptionHandler(UserNotFoundException.class)
