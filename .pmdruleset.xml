@@ -3808,7 +3808,7 @@ See the property `annotations`.
          <property description="If a constructor is annotated with one of these annotations, then the class is ignored."
                    name="annotations"
                    type="List[String]">
-            <value>org.springframework.beans.factory.annotation.Autowired,jakarta.inject.Inject,com.google.inject.Inject,lombok.Builder</value>
+            <value>org.springframework.beans.factory.annotation.Autowired,javax.inject.Inject,com.google.inject.Inject,lombok.Builder</value>
          </property>
       </properties>
       <example>
@@ -4436,7 +4436,7 @@ behavior especially when instances are distributed by the container on several J
       <priority>3</priority>
       <properties>
          <property name="xpath"
-                   value="//ClassDeclaration[ImplementsList/ClassType[&#xA;        pmd-java:typeIs('jakarta.ejb.SessionBean')&#xA;     or pmd-java:typeIs('jakarta.ejb.EJBHome')&#xA;     or pmd-java:typeIs('jakarta.ejb.EJBLocalObject')&#xA;     or pmd-java:typeIs('jakarta.ejb.EJBLocalHome')&#xA;     or pmd-java:typeIs('jakarta.ejb.EJBObject')&#xA;    ]]&#xA;    /ClassBody/FieldDeclaration&#xA;        [pmd-java:modifiers() = 'static']&#xA;        [not(pmd-java:modifiers() = 'final')]"/>
+                   value="//ClassDeclaration[ImplementsList/ClassType[&#xA;        pmd-java:typeIs('javax.ejb.SessionBean')&#xA;     or pmd-java:typeIs('javax.ejb.EJBHome')&#xA;     or pmd-java:typeIs('javax.ejb.EJBLocalObject')&#xA;     or pmd-java:typeIs('javax.ejb.EJBLocalHome')&#xA;     or pmd-java:typeIs('javax.ejb.EJBObject')&#xA;    ]]&#xA;    /ClassBody/FieldDeclaration&#xA;        [pmd-java:modifiers() = 'static']&#xA;        [not(pmd-java:modifiers() = 'final')]"/>
       </properties>
       <example>
 
@@ -5765,13 +5765,13 @@ The Local Home interface of a Session EJB should be suffixed by 'LocalHome'.
       <priority>4</priority>
       <properties>
          <property name="xpath"
-                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('jakarta.ejb.EJBLocalHome')&#xA;    and not(ends-with(@SimpleName, 'LocalHome'))&#xA;]"/>
+                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('javax.ejb.EJBLocalHome')&#xA;    and not(ends-with(@SimpleName, 'LocalHome'))&#xA;]"/>
       </properties>
       <example>
 
-public interface MyBeautifulLocalHome extends jakarta.ejb.EJBLocalHome {} // proper name
+public interface MyBeautifulLocalHome extends javax.ejb.EJBLocalHome {} // proper name
 
-public interface MissingProperSuffix extends jakarta.ejb.EJBLocalHome {}  // non-standard name
+public interface MissingProperSuffix extends javax.ejb.EJBLocalHome {}  // non-standard name
 
         </example>
    </rule>
@@ -5788,13 +5788,13 @@ The Local Interface of a Session EJB should be suffixed by 'Local'.
       <priority>4</priority>
       <properties>
          <property name="xpath"
-                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('jakarta.ejb.EJBLocalObject')&#xA;    and not(ends-with(@SimpleName, 'Local'))&#xA;]"/>
+                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('javax.ejb.EJBLocalObject')&#xA;    and not(ends-with(@SimpleName, 'Local'))&#xA;]"/>
       </properties>
       <example>
 
-public interface MyLocal extends jakarta.ejb.EJBLocalObject {}                // proper name
+public interface MyLocal extends javax.ejb.EJBLocalObject {}                // proper name
 
-public interface MissingProperSuffix extends jakarta.ejb.EJBLocalObject {}    // non-standard name
+public interface MissingProperSuffix extends javax.ejb.EJBLocalObject {}    // non-standard name
 
         </example>
    </rule>
@@ -5904,7 +5904,7 @@ The EJB Specification states that any MessageDrivenBean or SessionBean should be
       <priority>4</priority>
       <properties>
          <property name="xpath"
-                   value="//ClassDeclaration&#xA;[&#xA;    (pmd-java:typeIs('jakarta.ejb.SessionBean')&#xA;     or pmd-java:typeIs('jakarta.ejb.MessageDrivenBean'))&#xA;    and not(ends-with(@SimpleName, 'Bean'))&#xA;]"/>
+                   value="//ClassDeclaration&#xA;[&#xA;    (pmd-java:typeIs('javax.ejb.SessionBean')&#xA;     or pmd-java:typeIs('javax.ejb.MessageDrivenBean'))&#xA;    and not(ends-with(@SimpleName, 'Bean'))&#xA;]"/>
       </properties>
       <example>
 
@@ -6232,18 +6232,18 @@ Remote Interface of a Session EJB should not have a suffix.
       <priority>4</priority>
       <properties>
          <property name="xpath"
-                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('jakarta.ejb.EJBObject')&#xA;    and matches(@SimpleName, '.*(Session|EJB|Bean)$')&#xA;]"/>
+                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('javax.ejb.EJBObject')&#xA;    and matches(@SimpleName, '.*(Session|EJB|Bean)$')&#xA;]"/>
       </properties>
       <example>
 
 /* Poor Session suffix */
-public interface BadSuffixSession extends jakarta.ejb.EJBObject {}
+public interface BadSuffixSession extends javax.ejb.EJBObject {}
 
 /* Poor EJB suffix */
-public interface BadSuffixEJB extends jakarta.ejb.EJBObject {}
+public interface BadSuffixEJB extends javax.ejb.EJBObject {}
 
 /* Poor Bean suffix */
-public interface BadSuffixBean extends jakarta.ejb.EJBObject {}
+public interface BadSuffixBean extends javax.ejb.EJBObject {}
 
         </example>
    </rule>
@@ -6260,13 +6260,13 @@ A Remote Home interface type of a Session EJB should be suffixed by 'Home'.
       <priority>4</priority>
       <properties>
          <property name="xpath"
-                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('jakarta.ejb.EJBHome')&#xA;    and not(ends-with(@SimpleName, 'Home'))&#xA;]"/>
+                   value="//ClassDeclaration&#xA;[&#xA;    pmd-java:typeIs('javax.ejb.EJBHome')&#xA;    and not(ends-with(@SimpleName, 'Home'))&#xA;]"/>
       </properties>
       <example>
 
-public interface MyBeautifulHome extends jakarta.ejb.EJBHome {}       // proper name
+public interface MyBeautifulHome extends javax.ejb.EJBHome {}       // proper name
 
-public interface MissingProperSuffix extends jakarta.ejb.EJBHome {}   // non-standard name
+public interface MissingProperSuffix extends javax.ejb.EJBHome {}   // non-standard name
 
         </example>
    </rule>
@@ -7021,4 +7021,18 @@ Foo[] x = { ... }; //Equivalent to above line
             
         </example>
    </rule>
+   <rule ref="category/java/design.xml/LoosePackageCoupling">
+      <properties>
+         <property name="packages"
+                   value="io.realworld.backend.domain,io.realworld.backend.application"/>
+      </properties>
+   </rule>
+   <rule ref="category/java/design.xml/CyclomaticComplexity"/>
+   <rule ref="category/java/design.xml/NPathComplexity"/>
+   <rule ref="category/java/design.xml/ExcessiveParameterList">
+      <properties>
+         <property name="minimum" value="5"/>
+      </properties>
+   </rule>
+   <rule ref="category/java/design.xml/GodClass"/>
 </ruleset>

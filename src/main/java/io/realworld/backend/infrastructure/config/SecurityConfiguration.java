@@ -61,7 +61,7 @@ public class SecurityConfiguration {
             ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
         .authorizeHttpRequests(
             auth ->
-                auth.requestMatchers("/", "/swagger-ui/**", "/v3/api-docs/**")
+                auth.requestMatchers("/", "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**")
                     .permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/users", "/api/users/login")
                     .permitAll()

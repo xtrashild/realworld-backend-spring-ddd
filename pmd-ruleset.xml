@@ -13,12 +13,16 @@
 
     [0] https://pmd.github.io/latest/pmd_userdocs_making_rulesets.html
   </description>
-  <rule ref="category/java/design.xml/LoosePackageCoupling" />
+  <rule ref="category/java/design.xml/LoosePackageCoupling">
+    <properties>
+      <property name="packages" value="io.realworld.backend.domain,io.realworld.backend.application" />
+    </properties>
+  </rule>
   <rule ref="category/java/design.xml/CyclomaticComplexity" />
   <rule ref="category/java/design.xml/NPathComplexity" />
   <rule ref="category/java/design.xml/ExcessiveParameterList">
     <properties>
-      <property name="minimum" value="5.0" />
+      <property name="minimum" value="5" />
     </properties>
   </rule>
   <rule ref="category/java/design.xml/GodClass" />

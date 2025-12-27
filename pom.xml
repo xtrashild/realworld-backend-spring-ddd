@@ -202,10 +202,10 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <configuration>
           <fork>true</fork> <!-- Must fork or else JVM arguments are ignored. -->
-          <compilerArguments>
-            <Xmaxerrs>10000</Xmaxerrs>
-            <Xmaxwarns>10000</Xmaxwarns>
-          </compilerArguments>
+          <compilerArgs>
+            <arg>-verbose</arg>
+            <arg>-Xlint:all,-options,-path</arg>
+          </compilerArgs>
           <annotationProcessorPaths>
             <path>
               <groupId>org.checkerframework</groupId>
@@ -236,15 +236,14 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>3.1.2</version>
-        <configuration>
-          <configLocation>checkstyle.xml</configLocation>
-          <encoding>UTF-8</encoding>
-          <consoleOutput>true</consoleOutput>
-          <failsOnError>true</failsOnError>
-          <linkXRef>false</linkXRef>
-          <violationSeverity>warning</violationSeverity>
-        </configuration>
+        <version>3.6.0</version>
+	    <configuration>
+	        <configLocation>google_checks.xml</configLocation>
+	        <failsOnError>true</failsOnError>
+	        <consoleOutput>true</consoleOutput>
+	        <outputFile>${project.build.directory}/checkstyle/checkstyle-report.xml</outputFile>
+	    </configuration>
+
         <executions>
           <execution>
             <id>validate</id>
@@ -273,16 +272,16 @@
 		    <ruleset>${basedir}/pmd-ruleset.xml</ruleset>
 		  </rulesets>
         </configuration>
-        <!--<executions>
-          <execution>
-            <id>validate</id>
-            <phase>validate</phase>
-            <goals>
-              <goal>check</goal>
-              <goal>cpd-check</goal>
-            </goals>
-          </execution>
-        </executions><!-->
+	  <executions>
+	    <execution>
+	      <id>validate</id>
+	      <phase>validate</phase>
+	      <goals>
+	        <goal>check</goal>
+	        <goal>cpd-check</goal>
+	      </goals>
+	    </execution>
+	  </executions>
       </plugin>
       <plugin>
         <groupId>com.github.spotbugs</groupId>
@@ -305,7 +304,7 @@
       <plugin>
         <groupId>org.jacoco</groupId>
         <artifactId>jacoco-maven-plugin</artifactId>
-        <version>0.8.6</version>
+        <version>0.8.12</version>
         <executions>
           <execution>
             <goals>
@@ -336,4 +335,13 @@
       </plugin>
     </plugins>
   </build>
+  <reporting>
+    <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-jxr-plugin</artifactId>
+          <version>3.3.0</version>
+        </plugin>
+      </plugins>
+    </reporting>
 </project>
