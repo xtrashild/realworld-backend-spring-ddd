@@ -26,4 +26,23 @@
     </properties>
   </rule>
   <rule ref="category/java/design.xml/GodClass" />
+   <!-- TODO: fix these, for now:Exclude overly strict code style rules -->                                                                                                                                                                 
+ 31 +  <rule ref="category/java/codestyle.xml">                                                                                                                                                                        
+ 32 +    <exclude name="LocalVariableCouldBeFinal"/>                                                                                                                                                                   
+ 33 +    <exclude name="MethodArgumentCouldBeFinal"/>                                                                                                                                                                  
+ 34 +    <exclude name="OnlyOneReturn"/>                                                                                                                                                                               
+ 35 +    <exclude name="ShortVariable"/>                                                                                                                                                                               
+ 36 +    <exclude name="LiteralsFirstInComparisons"/>                                                                                                                                                                  
+ 37 +    <exclude name="UseExplicitTypes"/>                                                                                                                                                                            
+ 38 +    <exclude name="LongVariable"/>                                                                                                                                                                                
+ 39 +    <exclude name="AtLeastOneConstructor"/>                                                                                                                                                                       
+ 40 +  </rule>                                                                                                                                                                                                         
+ 41 +                                                                                                                                                                                                                  
+ 42 +  <rule ref="category/java/errorprone.xml">                                                                                                                                                                       
+ 43 +    <exclude name="AvoidLiteralsInIfCondition"/>                                                                                                                                                                  
+ 44 +  </rule>                                                                                                                                                                                                         
+ 45 +                                                                                                                                                                                                                  
+ 46 +  <rule ref="category/java/bestpractices.xml">                                                                                                                                                                    
+ 47 +    <exclude name="UseVarargs"/>                                                                                                                                                                                  
+ 48 +  </rule>                             
 </ruleset>

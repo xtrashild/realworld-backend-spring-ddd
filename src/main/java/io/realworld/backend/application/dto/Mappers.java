@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import lombok.Value;
 import org.checkerframework.checker.nullness.qual.Nullable;
 
 public class Mappers {
@@ -83,22 +84,10 @@ public class Mappers {
     return profile;
   }
 
+  @Value
   public static class FavouriteInfo {
     private final boolean isFavorited;
     private final int favoritesCount;
-
-    public FavouriteInfo(boolean isFavorited, int favoritesCount) {
-      this.isFavorited = isFavorited;
-      this.favoritesCount = favoritesCount;
-    }
-
-    public boolean isFavorited() {
-      return isFavorited;
-    }
-
-    public int getFavoritesCount() {
-      return favoritesCount;
-    }
   }
 
   /** Constructs SingleArticleResponseData response. */
@@ -183,23 +172,10 @@ public class Mappers {
     return commentsResponseData;
   }
 
+  @Value
   public static class MultipleFavouriteInfo {
     private final Set<Long> favouritedArticleIds;
     private final Map<Long, Long> favouritedCountByArticleId;
-
-    public MultipleFavouriteInfo(
-        Set<Long> favouritedArticleIds, Map<Long, Long> favouritedCountByArticleId) {
-      this.favouritedArticleIds = favouritedArticleIds;
-      this.favouritedCountByArticleId = favouritedCountByArticleId;
-    }
-
-    public Set<Long> getFavouritedArticleIds() {
-      return favouritedArticleIds;
-    }
-
-    public Map<Long, Long> getFavouritedCountByArticleId() {
-      return favouritedCountByArticleId;
-    }
   }
 
   /** Constructs MultipleArticlesResponseData response. */

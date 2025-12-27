@@ -11,6 +11,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface ArticleRepository extends PagingAndSortingRepository<Article, Long> {
   Optional<Article> findBySlug(String slug);
 
+  void save(Article article);
+
+  void delete(Article article);
+
   List<Article> findByAuthorIdIn(Collection<Long> authorIds, Pageable pageable);
 
   @Query(
@@ -42,9 +46,4 @@ public interface ArticleRepository extends PagingAndSortingRepository<Article, L
 
   @Query("SELECT t from Article a LEFT JOIN a.tags t")
   List<String> findAllTags();
-
-  // TODO: check if works
-  void save(Article article);
-
-  void delete(Article article);
 }

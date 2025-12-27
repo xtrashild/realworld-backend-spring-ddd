@@ -4,23 +4,17 @@ import io.realworld.backend.domain.aggregate.user.User;
 import io.realworld.backend.domain.aggregate.user.UserRepository;
 import io.realworld.backend.domain.service.AuthenticationService;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class SpringAuthenticationService implements AuthenticationService {
   private final UserRepository userRepository;
   private final PasswordEncoder passwordEncoder;
-
-  @Autowired
-  public SpringAuthenticationService(
-      UserRepository userRepository, PasswordEncoder passwordEncoder) {
-    this.userRepository = userRepository;
-    this.passwordEncoder = passwordEncoder;
-  }
 
   /** {@inheritDoc} */
   @Override

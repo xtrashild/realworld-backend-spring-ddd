@@ -7035,4 +7035,20 @@ Foo[] x = { ... }; //Equivalent to above line
       </properties>
    </rule>
    <rule ref="category/java/design.xml/GodClass"/>
+   <rule ref="category/java/codestyle.xml">
+      <exclude name="UseExplicitTypes"/>
+      <exclude name="LocalVariableCouldBeFinal"/>
+      <exclude name="MethodArgumentCouldBeFinal"/>
+      <exclude name="OnlyOneReturn"/>
+      <exclude name="LongVariable"/>
+      <exclude name="AtLeastOneConstructor"/>
+      <exclude name="LiteralsFirstInComparisons"/>
+      <exclude name="ShortVariable"/>
+   </rule>
+   <rule ref="category/java/errorprone.xml">
+      <exclude name="AvoidLiteralsInIfCondition"/>
+   </rule>
+   <rule ref="category/java/bestpractices.xml">
+      <exclude name="UseVarargs"/>
+   </rule>
 </ruleset>

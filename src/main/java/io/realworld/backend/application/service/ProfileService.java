@@ -14,28 +14,18 @@ import io.realworld.backend.rest.api.ProfileResponseData;
 import io.realworld.backend.rest.api.ProfilesApiDelegate;
 import java.util.Optional;
 import java.util.function.Predicate;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class ProfileService extends BaseService implements ProfilesApiDelegate {
   private final UserRepository userRepository;
   private final FollowRelationRepository followRelationRepository;
   private final AuthenticationService authenticationService;
-
-  /** Creates ProfileService instance. */
-  @Autowired
-  public ProfileService(
-      UserRepository userRepository,
-      FollowRelationRepository followRelationRepository,
-      AuthenticationService authenticationService) {
-    this.userRepository = userRepository;
-    this.followRelationRepository = followRelationRepository;
-    this.authenticationService = authenticationService;
-  }
 
   /** {@inheritDoc} */
   @Override

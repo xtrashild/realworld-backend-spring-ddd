@@ -3,17 +3,11 @@ package io.realworld.backend.domain.aggregate.article;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+@lombok.AllArgsConstructor
 public class OffsetBasedPageRequest implements Pageable {
   private final int offset;
   private final int limit;
   private final Sort sort;
-
-  /** Creates OffsetBasedPageRequest instance. */
-  public OffsetBasedPageRequest(int offset, int limit, Sort sort) {
-    this.offset = offset;
-    this.limit = limit;
-    this.sort = sort;
-  }
 
   @Override
   public int getPageNumber() {
@@ -68,7 +62,7 @@ public class OffsetBasedPageRequest implements Pageable {
 
   @Override
   public Pageable withPage(int pageNumber) {
-    // TODO Auto-generated method stub
+    // TODO fix implementation
     return null;
   }
 }

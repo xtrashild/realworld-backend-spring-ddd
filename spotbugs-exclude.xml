@@ -36,4 +36,9 @@
     <Method name="clone" />
     <Bug pattern="CN_IDIOM_NO_SUPER_CALL" />
   </Match>
+  
+  <!-- Exclude all generated API code -->                                                                                                                                                                         
+ 41 +  <Match>                                                                                                                                                                                                         
+ 42 +    <Class name="~io\.realworld\.backend\.rest\.api\..*" />                                                                                                                                                       
+ 43 +  </Match>  
 </FindBugsFilter>

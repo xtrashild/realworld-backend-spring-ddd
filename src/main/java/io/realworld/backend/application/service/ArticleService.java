@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.NativeWebRequest;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class ArticleService extends BaseService implements ArticlesApiDelegate, TagsApiDelegate {
   private final ArticleRepository articleRepository;
@@ -48,22 +49,6 @@ public class ArticleService extends BaseService implements ArticlesApiDelegate, 
   private final ArticleFavouriteRepository articleFavouriteRepository;
   private final CommentRepository commentRepository;
   private final AuthenticationService authenticationService;
-
-  /** Creates ArticleService instance. */
-  @SuppressWarnings("PMD.ExcessiveParameterList")
-  @Autowired
-  public ArticleService(
-      ArticleRepository articleRepository,
-      FollowRelationRepository followRelationRepository,
-      ArticleFavouriteRepository articleFavouriteRepository,
-      CommentRepository commentRepository,
-      AuthenticationService authenticationService) {
-    this.articleRepository = articleRepository;
-    this.followRelationRepository = followRelationRepository;
-    this.articleFavouriteRepository = articleFavouriteRepository;
-    this.commentRepository = commentRepository;
-    this.authenticationService = authenticationService;
-  }
 
   /** {@inheritDoc} */
   @Override

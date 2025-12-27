@@ -1,28 +1,19 @@
 package io.realworld.backend.domain.aggregate.favourite;
 
 import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 public interface ArticleFavouriteRepository
     extends JpaRepository<ArticleFavourite, ArticleFavouriteId> {
 
+  @Getter
+  @AllArgsConstructor
   class FavouriteCount {
     private final long articleId;
     private final long count;
-
-    public FavouriteCount(long articleId, long count) {
-      this.articleId = articleId;
-      this.count = count;
-    }
-
-    public long getArticleId() {
-      return articleId;
-    }
-
-    public long getCount() {
-      return count;
-    }
   }
 
   int countByIdArticleId(long articleId);

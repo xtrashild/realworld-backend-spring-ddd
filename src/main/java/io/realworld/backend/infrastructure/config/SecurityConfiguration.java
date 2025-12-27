@@ -2,7 +2,7 @@ package io.realworld.backend.infrastructure.config;
 
 import io.realworld.backend.infrastructure.security.JwtTokenFilter;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -18,14 +18,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
+@AllArgsConstructor
 @EnableWebSecurity
 public class SecurityConfiguration {
   private final JwtTokenFilter jwtTokenFilter;
-
-  @Autowired
-  public SecurityConfiguration(JwtTokenFilter jwtTokenFilter) {
-    this.jwtTokenFilter = jwtTokenFilter;
-  }
 
   @Bean
   public PasswordEncoder passwordEncoder() {

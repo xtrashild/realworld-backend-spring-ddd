@@ -8,32 +8,20 @@ import io.realworld.backend.domain.service.JwtService;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@AllArgsConstructor
 public class JJwtService implements JwtService {
+  @Value("${jwt.secret}")
   private final String secret;
-  private final int sessionTime;
-  private final UserRepository userRepository;
 
-  /**
-   * Creates DefaultJwtService instance.
-   *
-   * @param secret jwt secret
-   * @param sessionTime jwt session time in seconds
-   * @param userRepository user repository
-   */
-  @Autowired
-  public JJwtService(
-      @Value("${jwt.secret}") String secret,
-      @Value("${jwt.sessionTime}") int sessionTime,
-      UserRepository userRepository) {
-    this.secret = secret;
-    this.sessionTime = sessionTime;
-    this.userRepository = userRepository;
-  }
+  @Value("${jwt.sessionTime}")
+  private final int sessionTime;
+
+  private final UserRepository userRepository;
 
   /** {@inheritDoc} */
   @Override
@@ -58,7 +46,7 @@ public class JJwtService implements JwtService {
               .getSubject();
       final var userId = Long.parseLong(subject);
       return userRepository.findById(userId);
-    } catch (Exception e) {
+    } catch (io.jsonwebtoken.JwtException | NumberFormatException e) {
       return Optional.empty();
     }
   }

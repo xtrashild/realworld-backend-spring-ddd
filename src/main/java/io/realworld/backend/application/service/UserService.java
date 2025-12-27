@@ -19,29 +19,19 @@ import io.realworld.backend.rest.api.UserApiDelegate;
 import io.realworld.backend.rest.api.UserResponseData;
 import io.realworld.backend.rest.api.UsersApiDelegate;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.request.NativeWebRequest;
 
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class UserService extends BaseService implements UserApiDelegate, UsersApiDelegate {
   private final UserRepository userRepository;
   private final JwtService jwtService;
   private final AuthenticationService authenticationService;
-
-  /** Creates ApiFacade instance. */
-  @Autowired
-  public UserService(
-      UserRepository userRepository,
-      JwtService jwtService,
-      AuthenticationService authenticationService) {
-    this.userRepository = userRepository;
-    this.jwtService = jwtService;
-    this.authenticationService = authenticationService;
-  }
 
   /** {@inheritDoc} */
   @Override
