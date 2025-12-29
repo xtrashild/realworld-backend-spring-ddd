@@ -1,0 +1,42 @@
+
+  # Build artifacts
+  target/
+  *.jar
+  *.war
+  *.ear
+
+  # IDE files
+  .idea/
+  .vscode/
+  .settings/
+  *.iml
+  *.iws
+  *.ipr
+
+  # Environment files
+  .env
+  *.env
+  .env.local
+  application-local.properties
+
+  # Git
+  .git/
+  .gitignore
+
+  # CI/CD
+  .github/
+  .claude/
+
+  # Logs
+  *.log
+  dev-run.log
+  latest-run.log
+
+  # OS files
+  .DS_Store
+  Thumbs.db
+
+  # Maven wrapper
+  .mvn/
+  mvnw
+  mvnw.cmd

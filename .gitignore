@@ -9,5 +9,8 @@ target/
 *.iws
 *.iml
 *.ipr
+.env
+*.env
+application-local.properties
 
 .DS_Store

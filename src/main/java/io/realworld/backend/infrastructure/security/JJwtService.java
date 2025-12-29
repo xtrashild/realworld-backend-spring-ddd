@@ -8,18 +8,18 @@ import io.realworld.backend.domain.service.JwtService;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Optional;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JJwtService implements JwtService {
   @Value("${jwt.secret}")
-  private final String secret;
+  private String secret;
 
   @Value("${jwt.sessionTime}")
-  private final int sessionTime;
+  private int sessionTime;
 
   private final UserRepository userRepository;
 
