@@ -3,8 +3,8 @@ package io.realworld.backend.infrastructure.config;
 import io.realworld.backend.infrastructure.security.JwtTokenFilter;
 import java.util.Arrays;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Value;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -20,7 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
-@AllArgsConstructor
+@RequiredArgsConstructor
 @EnableWebSecurity
 public class SecurityConfiguration {
   private final JwtTokenFilter jwtTokenFilter;
