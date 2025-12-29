@@ -1,8 +1,10 @@
 package io.realworld.backend.infrastructure.config;
 
 import io.realworld.backend.infrastructure.security.JwtTokenFilter;
+import java.util.Arrays;
 import java.util.List;
 import lombok.AllArgsConstructor;
+import lombok.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,9 @@ import org.springframework.web.cors.CorsConfiguration;
 public class SecurityConfiguration {
   private final JwtTokenFilter jwtTokenFilter;
 
+  @Value("${cors.allowed-origins}")
+  private String allowedOrigins;
+
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -42,8 +47,7 @@ public class SecurityConfiguration {
                 cors.configurationSource(
                     request -> {
                       var config = new CorsConfiguration();
-                      config.setAllowedOrigins(
-                          List.of("http://localhost:4200", "http://localhost:8080"));
+                      config.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
                       config.setAllowedMethods(
                           List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
                       config.setAllowedHeaders(List.of("*"));
